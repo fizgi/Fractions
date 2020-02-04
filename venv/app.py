@@ -15,8 +15,8 @@ class Fraction:
         if denom == 0:
             raise ZeroDivisionError
 
-        self.num = num
-        self.denom = denom
+        self.num: float = num
+        self.denom: float = denom
 
     def __str__(self) -> str:
         """ return a String to display fractions """
@@ -77,7 +77,7 @@ class Fraction:
         if self.num * other.denom == self.denom * other.num:
             return True
         else:
-            return False
+            return False # the fractions are not equal
 
 
 def test_suite() -> None:
@@ -115,8 +115,6 @@ def test_suite() -> None:
     print(f"f12 = 1/2 [{f12}]")
     print(f"f912 = 9/12 [{f912}]")
 
-    # TODO: Be sure to test all methods, including __str__
-
 def get_number(prompt: str) -> float:
     """ read and return a number from the user.
         Loop until the user provides a valid number.
@@ -143,6 +141,7 @@ def compute(f1: Fraction, operator: str, f2: Fraction) -> None:
         of applying the operator to the two fractions
     """
     result: Fraction  # just define the type of result, don't set a value
+    equality: bool = False
     okay: bool = True # a variable to decide printing the result
 
     if operator == '+':
@@ -154,7 +153,9 @@ def compute(f1: Fraction, operator: str, f2: Fraction) -> None:
     elif operator == "/":
         result = f1.divide(f2)
     elif operator == "==":
-        result: bool = f1.equal(f2)
+        equality = f1.equal(f2)
+        print(f"{f1} {operator} {f2} = {equality}")
+        okay = False
     else:
         print(f"Error: '{operator}' is an unrecognized operator")
         okay = False # unrecognized operator --> do not print the result

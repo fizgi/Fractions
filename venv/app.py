@@ -12,7 +12,8 @@ class Fraction:
         """ store num and denom
             Raise ZeroDivisionError on 0 denominator
         """
-        if denom == 0:
+
+        if denom == 0.0:
             raise ZeroDivisionError
 
         self.num: float = num
@@ -26,11 +27,11 @@ class Fraction:
         """ Add two fractions using simplest approach.
             Calculate new numerator and denominator and return new Fraction
         """
-        new_self_num = self.num * other.denom
-        new_other_num = other.num * self.denom
+        new_self_num: float = self.num * other.denom
+        new_other_num: float  = other.num * self.denom
 
-        final_num = new_self_num + new_other_num
-        final_denom = self.denom * other.denom
+        final_num: float = new_self_num + new_other_num
+        final_denom: float = self.denom * other.denom
 
         final_fraction: Fraction = Fraction(final_num, final_denom)
 
@@ -40,11 +41,11 @@ class Fraction:
         """ subtract two fractions using simplest approach
             Calculate new numerator and denominator and return new Fraction
         """
-        new_self_num = self.num * other.denom
-        new_other_num = other.num * self.denom
+        new_self_num: float = self.num * other.denom
+        new_other_num: float = other.num * self.denom
 
-        final_num = new_self_num - new_other_num
-        final_denom = self.denom * other.denom
+        final_num: float = new_self_num - new_other_num
+        final_denom: float = self.denom * other.denom
 
         final_fraction: Fraction = Fraction(final_num, final_denom)
 
@@ -54,8 +55,8 @@ class Fraction:
         """ Multiply two fractions using simplest approach
             Calculate new numerator and denominator and return new Fraction
         """
-        final_num = self.num * other.num
-        final_denom = self.denom * other.denom
+        final_num: float = self.num * other.num
+        final_denom: float = self.denom * other.denom
 
         final_fraction: Fraction = Fraction(final_num, final_denom)
 
@@ -65,8 +66,8 @@ class Fraction:
         """ Add two fractions using simplest approach.
             Calculate new numerator and denominator and return new Fraction
         """
-        final_num = self.num * other.denom
-        final_denom = self.denom * other.num
+        final_num: float = self.num * other.denom
+        final_denom: float = self.denom * other.num
 
         final_fraction: Fraction = Fraction(final_num, final_denom)
 
@@ -131,7 +132,14 @@ def get_fraction(count: int) -> Fraction:
     """ Ask the user for a numerator and denominator and return a valid Fraction """
     while True:
         num = get_number(f"Enter a numerator for Fraction {count}: ")
-        denom = get_number(f"Enter a denominator for Fraction {count}: ")
+
+        while True:
+            denom = get_number(f"Enter a denominator for Fraction {count}: ")
+            if denom != 0:
+                break
+            else:
+                print("Denominator cannot be 0. Please enter another number.")
+
         fraction: Fraction = Fraction(num, denom)
 
         return fraction
@@ -141,7 +149,6 @@ def compute(f1: Fraction, operator: str, f2: Fraction) -> None:
         of applying the operator to the two fractions
     """
     result: Fraction  # just define the type of result, don't set a value
-    equality: bool = False
     okay: bool = True # a variable to decide printing the result
 
     if operator == '+':
@@ -153,7 +160,7 @@ def compute(f1: Fraction, operator: str, f2: Fraction) -> None:
     elif operator == "/":
         result = f1.divide(f2)
     elif operator == "==":
-        equality = f1.equal(f2)
+        equality: bool = f1.equal(f2)
         print(f"{f1} {operator} {f2} = {equality}")
         okay = False
     else:
@@ -173,8 +180,8 @@ def main() -> None:
 
     try:
         compute(f1, operator, f2)
-    except ZeroDivisionError as e:
-        print(e)
+    except ZeroDivisionError:
+        print("Zero Division Error!")
 
 
 if __name__ == '__main__':
